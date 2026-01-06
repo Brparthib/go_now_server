@@ -11,13 +11,9 @@ export const authProviderZodSchema = z.object({
 });
 
 export const locationZodSchema = z.object({
-  country: z
-    .string({ error: "Country must be a string." })
-    .optional(),
+  country: z.string({ error: "Country must be a string." }).optional(),
 
-  city: z
-    .string({ error: "City must be a string." })
-    .optional(),
+  city: z.string({ error: "City must be a string." }).optional(),
 
   geo: z
     .object({
@@ -43,6 +39,10 @@ export const ratingSummaryZodSchema = z.object({
 });
 
 export const createUserZodSchema = z.object({
+  fullName: z
+    .string({ error: "Full name must be a string." })
+    .max(100, { message: "Full name cannot exceed 100 characters." }),
+
   email: z
     .email({ message: "Invalid email address format." })
     .min(5, { message: "Email must be at least 5 characters long." })
@@ -73,18 +73,9 @@ export const createUserZodSchema = z.object({
     })
     .optional(),
 
-  auths: z
-    .array(authProviderZodSchema)
-    .optional(),
+  auths: z.array(authProviderZodSchema).optional(),
 
-  fullName: z
-    .string({ error: "Full name must be a string." })
-    .max(100, { message: "Full name cannot exceed 100 characters." })
-    .optional(),
-
-  imageUrl: z
-    .url({ message: "Invalid image URL format." })
-    .optional(),
+  imageUrl: z.url({ message: "Invalid image URL format." }).optional(),
 
   bio: z
     .string({ error: "Bio must be a string." })
@@ -111,9 +102,7 @@ export const createUserZodSchema = z.object({
 });
 
 export const updateUserZodSchema = z.object({
-  email: z
-    .email({ message: "Invalid email address format." })
-    .optional(),
+  email: z.email({ message: "Invalid email address format." }).optional(),
 
   password: z
     .string({ error: "Password must be a string." })
@@ -138,22 +127,13 @@ export const updateUserZodSchema = z.object({
     .max(100)
     .optional(),
 
-  imageUrl: z
-    .url({ message: "Invalid image URL format." })
-    .optional(),
+  imageUrl: z.url({ message: "Invalid image URL format." }).optional(),
 
-  bio: z
-    .string({ error: "Bio must be a string." })
-    .max(500)
-    .optional(),
+  bio: z.string({ error: "Bio must be a string." }).max(500).optional(),
 
-  travelInterests: z
-    .array(z.string())
-    .optional(),
+  travelInterests: z.array(z.string()).optional(),
 
-  visitedCountries: z
-    .array(z.string())
-    .optional(),
+  visitedCountries: z.array(z.string()).optional(),
 
   currentLocation: locationZodSchema.optional(),
 
@@ -163,7 +143,5 @@ export const updateUserZodSchema = z.object({
 
   ratingSummary: ratingSummaryZodSchema.optional(),
 
-  isDeleted: z
-    .boolean({ error: "isDeleted must be boolean." })
-    .optional(),
+  isDeleted: z.boolean({ error: "isDeleted must be boolean." }).optional(),
 });

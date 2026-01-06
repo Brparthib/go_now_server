@@ -4,6 +4,7 @@ export enum UserRole {
   USER = "USER",
   ADMIN = "ADMIN",
 }
+
 export enum UserStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
@@ -36,7 +37,7 @@ export interface IUser {
   role: UserRole;
   status?: UserStatus;
   auths?: AuthProvider[];
-  fullName?: string;
+  fullName: string;
   imageUrl?: string;
   bio?: string;
   travelInterests?: string[];

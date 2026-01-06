@@ -61,7 +61,7 @@ const updateUser = async (
   if (payload.password) {
     payload.password = await bcrypt.hash(
       payload.password as string,
-      Number(envVars.BCRYPT_SALT_ROUND) | 10
+      Number(envVars.BCRYPT_SALT_ROUND) || 10
     );
   }
 
@@ -73,6 +73,15 @@ const updateUser = async (
   }
 
   if (payload.role === UserRole.ADMIN && decodedToken.role !== UserRole.ADMIN) {
+    throw new AppError(httpStatus.FORBIDDEN, "You are unauthorized!!");
+  }
+
+  if (
+    (payload.isSubscribed ||
+      payload.hasVerifiedBadge ||
+      payload.ratingSummary) &&
+    user.role !== UserRole.ADMIN
+  ) {
     throw new AppError(httpStatus.FORBIDDEN, "You are unauthorized!!");
   }
 
@@ -99,5 +108,5 @@ export const userServices = {
   createUser,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
 };

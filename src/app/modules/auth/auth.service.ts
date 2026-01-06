@@ -64,7 +64,7 @@ const resetPassword = async (
 
   user!.password = await bcrypt.hash(
     newPassword,
-    Number(envVars.BCRYPT_SALT_ROUND) | 10
+    Number(envVars.BCRYPT_SALT_ROUND) || 10
   );
 
   user!.save();

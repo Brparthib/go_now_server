@@ -96,6 +96,7 @@ const userSchema = new Schema<IUser>(
     auths: [authProviderSchema],
     fullName: {
       type: String,
+      required: true,
       trim: true,
     },
     imageUrl: {
